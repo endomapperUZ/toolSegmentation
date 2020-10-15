@@ -29,7 +29,9 @@ from albumentations import (
     CenterCrop
 )
 
-def train(model, model_name, num_mod,type_mod, jaccard_weight, fold, root, batch_size, n_epochs, lr, workers, num_classes, train_size):
+def train(model, model_name, num_mod,type_mod, jaccard_weight, fold, root, 
+batch_size, n_epochs, lr, workers, num_classes, train_size, train_crop_height, 
+train_crop_width, val_crop_height, val_crop_width):
 
     loss = LossBinary(jaccard_weight)
 
@@ -48,8 +50,8 @@ def train(model, model_name, num_mod,type_mod, jaccard_weight, fold, root, batch
 
     def train_transform(p=1):
         return Compose([
-            PadIfNeeded(min_height=args.train_crop_height, min_width=args.train_crop_width, p=1),
-            RandomCrop(height=args.train_crop_height, width=args.train_crop_width, p=1),
+            #PadIfNeeded(min_height=train_crop_height, min_width=train_crop_width, p=1),
+            RandomCrop(height=train_crop_height, width=train_crop_width, p=1),
             VerticalFlip(p=0.5),
             HorizontalFlip(p=0.5),
             Normalize(p=1)
@@ -57,14 +59,14 @@ def train(model, model_name, num_mod,type_mod, jaccard_weight, fold, root, batch
 
     def val_transform(p=1):
         return Compose([
-            PadIfNeeded(min_height=args.val_crop_height, min_width=args.val_crop_width, p=1),
-            CenterCrop(height=args.val_crop_height, width=args.val_crop_width, p=1),
+            #PadIfNeeded(min_height=val_crop_height, min_width=val_crop_width, p=1),
+            CenterCrop(height=val_crop_height, width=val_crop_width, p=1),
             Normalize(p=1)
         ], p=p)
 
-    train_loader = make_loader(train_file_names, shuffle=True, problem_type='binary',
+    train_loader = make_loader(train_file_names, shuffle=True, transform=train_transform(p=1), problem_type='binary',
                                batch_size=batch_size)
-    valid_loader = make_loader(val_file_names, problem_type='binary',
+    valid_loader = make_loader(val_file_names, transform=val_transform(p=1), problem_type='binary',
                                batch_size=1)
     dataloaders = {"train" : train_loader,"val" : valid_loader}
 

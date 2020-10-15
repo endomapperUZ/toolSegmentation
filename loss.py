@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 from torch.nn import functional as F
-import utils_ft
+import utils
 import numpy as np
 
 
