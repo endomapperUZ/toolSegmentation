@@ -4,10 +4,7 @@ This repository is built on a fork of project **robot-surgery-segmentation** (at
 The main goal is to obtain a tool segmentation model adapted to the requirements of the project **EndoMapper**.
 
 ## Authors
-TBA
-
-## Dependencies
-TBA
+Clara Tomasini, Leon Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## How to run
 TBA
