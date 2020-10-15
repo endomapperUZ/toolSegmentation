@@ -4,13 +4,13 @@ import cv2
 from torch.utils.data import Dataset
 import prepare_data
 from albumentations.pytorch.functional import img_to_tensor
-
+from pathlib import Path
 
 class RigidDataset(Dataset):
     def __init__(self, file_names, to_augment=False, transform=None, mode='train', problem_type=None):
         self.file_names = file_names
-        #self.to_augment = to_augment
-        #self.transform = transform
+        self.to_augment = to_augment
+        self.transform = transform
         self.mode = mode
         self.problem_type = problem_type
 
@@ -23,8 +23,8 @@ class RigidDataset(Dataset):
         mask = load_mask(img_file_name, self.problem_type)
         mask = mask>0
         data = {"image": image, "mask": mask}
-        #augmented = self.transform(**data)
-        #image, mask = augmented["image"], augmented["mask"]
+        augmented = self.transform(**data)
+        image, mask = augmented["image"], augmented["mask"]
 
         if self.mode == 'train':
             if self.problem_type == 'binary':
@@ -35,13 +35,13 @@ class RigidDataset(Dataset):
             return img_to_tensor(image), str(img_file_name)
 
 
+
 def load_image(path):
-    img = cv2.imread(str(path))
+    img_path = 'raw'
+    img = cv2.imread(str(path).replace('masks',img_path).replace('mask','frame'))
     return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 
 def load_mask(path, problem_type):
-    mask_folder = 'Masks'
-    mask = cv2.imread(str(path).replace('Raw', mask_folder).replace('raw', 'class'), 0)
-
+    mask = cv2.imread(str(path), 0)
     return mask.astype(np.uint8)
