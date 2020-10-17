@@ -7,7 +7,7 @@ The main goal is to obtain a tool segmentation model adapted to the requirements
 Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## Results
-
+Segmentations obtained for 2 images from the Hamlyn dataset using UNet-11 model
 ![results_2425](/images/results_2425.png)
 ![results_5801](/images/results_5801.png)
 
