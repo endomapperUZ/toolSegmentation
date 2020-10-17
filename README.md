@@ -4,7 +4,12 @@ This repository is built on a fork of project **robot-surgery-segmentation** (at
 The main goal is to obtain a tool segmentation model adapted to the requirements of the project **EndoMapper**.
 
 ## Authors
-Clara Tomasini, Leon Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
+Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
+
+## Results
+
+![results_2425](/images/results_2425.png)
+![results_5801](/images/results_5801.png)
 
 ## How to run
-TBA
+File *Demo.ipynb* provides an example of how to use the model
