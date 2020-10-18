@@ -7,9 +7,14 @@ The main goal is to obtain a tool segmentation model adapted to the requirements
 Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## Results
-Segmentations obtained for 2 images from the Hamlyn dataset using UNet-11 model
+Segmentation obtained for an image from the Hamlyn dataset using TernausNet-11 model
 ![results_2425](/images/results_2425.png)
-![results_5801](/images/results_5801.png)
 
+Model | IOU, % | Dice, % | Time, ms
+------| ------ | ------- | -------
+U-Net |  |  | 67
+TernausNet-11 |  |  |  114
+TernausNet-16 |  |  | 
+LinkNet34 |  |  |
 ## How to run
 File *Demo.ipynb* provides an example of how to use the model
