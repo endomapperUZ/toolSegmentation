@@ -8,7 +8,7 @@ Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## Results
 Segmentation obtained for an image from the Hamlyn dataset using UNet and TernausNet-11 models
-![results_2425](/images/results_2425.png)
+![results_2425](/images/results_2425.png) ![results_2425](/images/results_5801.png)
 
 
 
