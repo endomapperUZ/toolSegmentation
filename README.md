@@ -10,12 +10,7 @@ Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 Segmentation obtained for an image from the Hamlyn dataset using UNet and TernausNet-11 models
 ![results_2425](/images/results_2425.png)
 
-Model | IOU, % | Dice, % | Time, ms
-------| ------ | ------- | -------
-U-Net | 39.79 | 56.93 | 109
-TernausNet-11 | 53.56 | 69.76 |  214
-TernausNet-16 |  |  | 
-LinkNet34 |  |  |
+
 
 ## How to run
 Trained models are available at https://drive.google.com/drive/folders/1VOtD3U9jF4jPsPlZfU0LD3yXx0oI8d8-?usp=sharing
