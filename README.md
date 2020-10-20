@@ -13,8 +13,7 @@ Segmentation obtained for an image from the Hamlyn dataset using UNet and Ternau
 Model | IOU, % | Dice, % | Time, ms
 ------| ------ | ------- | -------
 U-Net | 39.79 | 56.93 | 109
-TernausNet-11 | 53.56 | 69.76 |  214
-TernausNet-16 |  |  | 
+TernausNet-11 | 53.56 | 69.76 | 214
 LinkNet34 |  |  |
 
 ## How to run
