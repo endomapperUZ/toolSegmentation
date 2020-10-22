@@ -9,6 +9,7 @@ Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 ## Results
 All models were available pretrained on images similar to those of the Hamlyn dataset, and were then fine-tuned on more specific images from a different dataset (UCL).
 File *training.ipynb* shows how to fine-tune the models.
+
 Segmentations obtained for images from the Hamlyn dataset and from the fine-tuning dataset (UCL) using UNet, TernausNet-11 and LinkNet-34 models show how fine-tuning the models makes it possible to obtain better segmentations for images from the UCL dataset. 
 
 ![results](/images/results.png)
