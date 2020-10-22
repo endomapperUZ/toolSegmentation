@@ -11,7 +11,7 @@ All models were available pretrained on images similar to those of the Hamlyn da
 File *training.ipynb* shows how to fine-tune the models.
 Segmentations obtained for images from the Hamlyn dataset and from the fine-tuning dataset (UCL) using UNet, TernausNet-11 and LinkNet-34 models show how fine-tuning the models makes it possible to obtain better segmentations for images from the UCL dataset. 
 
-![results_2425](/images/results_2425.png) ![results_2425](/images/results_5801.png)
+![results](/images/results.png)
 
 
 
