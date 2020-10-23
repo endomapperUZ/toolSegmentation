@@ -11,7 +11,7 @@ Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 ## How to run
 Fine-tuned models are available at https://drive.google.com/drive/folders/1VOtD3U9jF4jPsPlZfU0LD3yXx0oI8d8-?usp=sharing
 
-XML files containing masks coordinates are available at https://drive.google.com/drive/folders/1bIv1w320DhIB3AW0UWRPtRgjlG4ephs5?usp=sharing
+XML files containing masks coordinates for UCL frames are available at https://drive.google.com/drive/folders/1bIv1w320DhIB3AW0UWRPtRgjlG4ephs5?usp=sharing
 
 File *Demo.ipynb* provides an example of how to use the model in order to get a prediction for a given image using one of the models.
 
