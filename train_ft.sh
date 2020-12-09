@@ -12,7 +12,7 @@ do
         --type_mod ent \
         --jaccard-weight 0.3 \
         --fold $i \
-        --root /content/drive/Shareddrives/TFM_Clara/6_robot-surgery-segmentation-master \
+        --root /workspace/toolSegmentation \
         --batch-size 2 \
         --n-epochs $num_epochs_1 \
         --lr 0.0001 \
@@ -29,9 +29,9 @@ do
         --type_mod ent \
         --jaccard-weight 0.3 \
         --fold $i \
-        --root /content/drive/Shareddrives/TFM_Clara/6_robot-surgery-segmentation-master \
+        --root /workspace/toolSegmentation \
         --batch-size 2 \
-        --n-epochs $num_epochs \
+        --n-epochs $num_epochs_2 \
         --lr 0.00001 \
         --workers 12 \
         --num_classes 1 \

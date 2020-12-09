@@ -2,15 +2,15 @@
 Script generates predictions, splitting original images into tiles, and assembling prediction back together
 """
 import argparse
-from prepare_train_val import get_split
-from dataset import RoboticsDataset
+from prepare_train_val_ft import get_split
+from dataset_ft import RigidDataset
 import cv2
 from models import UNet16, LinkNet34, UNet11, UNet, AlbuNet
 import torch
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
-import utils
+import utils_ft
 import prepare_data
 from torch.utils.data import DataLoader
 from torch.nn import functional as F
@@ -67,7 +67,7 @@ def get_model(model_path, model_type='UNet11', problem_type='binary'):
 
 def predict(model, from_file_names, batch_size, to_path, problem_type, img_transform):
     loader = DataLoader(
-        dataset=RoboticsDataset(from_file_names, transform=img_transform, mode='predict', problem_type=problem_type),
+        dataset=RigidDataset(from_file_names, transform=img_transform, mode='predict', problem_type=problem_type),
         shuffle=False,
         batch_size=batch_size,
         num_workers=args.workers,
