@@ -81,7 +81,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
     }, str(new_model_path)) # .replace('models','models_ft'))
 
     report_each = 10
-    log = root.joinpath('train_{}_{}_{}.log'.format(fold,model_name,num_mod)).open('at', encoding='utf8')
+    log = root.joinpath('train_{}_{}.log'.format(model_name,num_mod)).open('at', encoding='utf8')
     valid_losses = []
     for epoch in range(epoch, n_epochs + 1):
         model.train()

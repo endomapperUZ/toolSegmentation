@@ -44,7 +44,6 @@ if __name__ == '__main__':
         for file_name in tqdm(list((train_path / instrument_folder / 'left_frames').glob('*'))):
             img = cv2.imread(str(file_name))
             old_h, old_w, _ = img.shape
-
             img = img[h_start: h_start + height, w_start: w_start + width]
             cv2.imwrite(str(cropped_train_path / instrument_folder / 'images' / (file_name.stem + '.jpg')), img,
                         [cv2.IMWRITE_JPEG_QUALITY, 100])
@@ -79,11 +78,11 @@ if __name__ == '__main__':
                     mask_parts[mask == 30] = 3  # Claspers
 
             mask_binary = (mask_binary[h_start: h_start + height, w_start: w_start + width] > 0).astype(
-                np.uint8) * binary_factor
+              np.uint8) * binary_factor
             mask_parts = (mask_parts[h_start: h_start + height, w_start: w_start + width]).astype(
-                np.uint8) * parts_factor
+              np.uint8) * parts_factor
             mask_instruments = (mask_instruments[h_start: h_start + height, w_start: w_start + width]).astype(
-                np.uint8) * instrument_factor
+              np.uint8) * instrument_factor
 
             cv2.imwrite(str(binary_mask_folder / file_name.name), mask_binary)
             cv2.imwrite(str(parts_mask_folder / file_name.name), mask_parts)

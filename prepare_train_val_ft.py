@@ -7,6 +7,7 @@ def get_split(root, fold, train_size ):
   train_file_names = []
   val_file_names = []
   num_files = len(train_path)
+  print(num_files)
   file_ind = [k for k in range(num_files)]
   random.shuffle(file_ind)
   for i in range(int(num_files*train_size)):
@@ -15,8 +16,9 @@ def get_split(root, fold, train_size ):
     val_file_names.append(train_path[file_ind[m]])
   #train_file_names = train_path[file_ind[:int(num_files*train_size)]]
   #val_file_names = train_path[file_ind[int(num_files*train_size):]]
-  #print(file_ind)
-  f = open("train_val_dataset.txt", "a")
+
+  file_name = "train_val_dataset"+fold.replace('train_data/','').replace('_raw','')+".txt"
+  f = open(file_name, "a")
   f.write("Train files : \n")
   f.write("\n".join(train_file_names))
   f.write("\n Val files : \n")
