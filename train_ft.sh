@@ -16,7 +16,7 @@ do
         --batch-size 8 \
         --n-epochs $num_epochs_1 \
         --lr 0.0001 \
-        --workers 6 \
+        --workers 3 \
         --num_classes 1 \
         --train_size 0.6 
 
@@ -33,7 +33,7 @@ do
         --batch-size 8 \
         --n-epochs $num_epochs_2 \
         --lr 0.00001 \
-        --workers 6 \
+        --workers 3 \
         --num_classes 1 \
         --train_size 0.6 
 done
