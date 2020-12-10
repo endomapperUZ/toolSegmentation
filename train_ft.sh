@@ -3,7 +3,7 @@ n_epochs=20
 
 for i in 0 1 2
 do
-    num_epochs_1=$(($n_epochs+10+20*$i))
+    num_epochs_1=$(($n_epochs+50+60*$i))
     python train_ft_exec.py \
         --model_path data/models/linknet_binary_20/model_0.pt \
         --model_type LinkNet34 \
@@ -13,14 +13,14 @@ do
         --jaccard-weight 0.3 \
         --fold $i \
         --root /workspace/toolSegmentation \
-        --batch-size 2 \
+        --batch-size 16 \
         --n-epochs $num_epochs_1 \
         --lr 0.0001 \
         --workers 6 \
         --num_classes 1 \
         --train_size 0.6 
 
-    num_epochs_2=$(($n_epochs+20+20*$i))
+    num_epochs_2=$(($n_epochs+60+60*$i))
     python train_ft_exec.py \
         --model_path data/models/linknet_binary_20/model_0.pt \
         --model_type LinkNet34 \
@@ -30,7 +30,7 @@ do
         --jaccard-weight 0.3 \
         --fold $i \
         --root /workspace/toolSegmentation \
-        --batch-size 2 \
+        --batch-size 16 \
         --n-epochs $num_epochs_2 \
         --lr 0.00001 \
         --workers 6 \
