@@ -1,5 +1,5 @@
 import numpy as np
-import utils_ft
+import utils_ft as utils
 from torch import nn
 import torch
 
