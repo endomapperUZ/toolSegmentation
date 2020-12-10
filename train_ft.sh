@@ -13,7 +13,7 @@ do
         --jaccard-weight 0.3 \
         --fold $i \
         --root /workspace/toolSegmentation \
-        --batch-size 16 \
+        --batch-size 8 \
         --n-epochs $num_epochs_1 \
         --lr 0.0001 \
         --workers 6 \
@@ -30,7 +30,7 @@ do
         --jaccard-weight 0.3 \
         --fold $i \
         --root /workspace/toolSegmentation \
-        --batch-size 16 \
+        --batch-size 8 \
         --n-epochs $num_epochs_2 \
         --lr 0.00001 \
         --workers 6 \
