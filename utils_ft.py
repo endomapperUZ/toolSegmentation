@@ -5,7 +5,6 @@ import time
 import copy
 import random
 import numpy as np
-from validation import get_jaccard
 
 import torch
 import tqdm
@@ -36,6 +35,13 @@ def check_crop_size(image_height, image_width):
     """
     return image_height % 32 == 0 and image_width % 32 == 0
 
+
+def get_jaccard(y_true, y_pred):
+    epsilon = 1e-15
+    intersection = (y_pred * y_true).sum(dim=-2).sum(dim=-1)
+    union = y_true.sum(dim=-2).sum(dim=-1) + y_pred.sum(dim=-2).sum(dim=-1)
+
+    return list(((intersection + epsilon) / (union - intersection + epsilon)).data.cpu().numpy())
 
 def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, valid_loader, validation, init_optimizer, n_epochs=None, fold=None,
           num_classes=None):
