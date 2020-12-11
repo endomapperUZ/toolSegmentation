@@ -5,6 +5,7 @@ import time
 import copy
 import random
 import numpy as np
+from validation import get_jaccard
 
 import torch
 import tqdm
@@ -41,7 +42,6 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
     lr = args.lr
     n_epochs = n_epochs or args.n_epochs
     optimizer = init_optimizer(lr)
-
     root = Path(args.root)
     model_path = root / 'data/models_ft/{}_binary_20/model_{}.pt'.format(model_name, num_mod)
     new_model_path = root / 'data/models_ft/{}_binary_20/model_{}_{}.pt'.format(model_name, num_mod, type_mod)
@@ -83,12 +83,14 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
     report_each = 10
     log = root.joinpath('train_{}_{}.log'.format(model_name,num_mod)).open('at', encoding='utf8')
     valid_losses = []
+    best_jac = 0
     for epoch in range(epoch, n_epochs + 1):
         model.train()
         random.seed()
         tq = tqdm.tqdm(total=(len(train_loader) * args.batch_size))
         tq.set_description('Epoch {}, lr {}'.format(epoch, lr))
         losses = []
+        jaccard = []
         tl = train_loader
         try:
             mean_loss = 0
@@ -108,16 +110,26 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
                 tq.update(batch_size)
                 losses.append(loss.item())
                 mean_loss = np.mean(losses[-report_each:])
+                jaccard += get_jaccard(targets, (outputs > 0).float())
                 tq.set_postfix(loss='{:.5f}'.format(mean_loss))
-                if i and i % report_each == 0:
+                #print('Valid loss: {:.5f}, jaccard: {:.5f}'.format(valid_loss, valid_jaccard))
+                if i and i % report_each == 0:                
                     write_event(log, step, loss=mean_loss)
-            write_event(log, step, loss=mean_loss)
+            mean_jac = np.mean(jaccard).astype(np.float64)
+            metrics = {'loss': mean_loss, 'jaccard_loss': mean_jac}
+            #write_event(log, step, loss=mean_loss)
+            write_event(log, step, **metrics)
             tq.close()
-            save(epoch + 1)
+            #save(epoch + 1)
             valid_metrics = validation(model, criterion, valid_loader, num_classes)
             write_event(log, step, **valid_metrics)
             valid_loss = valid_metrics['valid_loss']
             valid_losses.append(valid_loss)
+            valid_jac = valid_metrics['jaccard_loss']
+            if valid_jac > best_jac:
+              save(epoch + 1)
+              best_jac = valid_jac
+            print('Best model jaccard : '+ str(best_jac))
         except KeyboardInterrupt:
             tq.close()
             print('Ctrl+C, saving snapshot')
