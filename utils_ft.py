@@ -69,7 +69,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
         state = torch.load(str(model_path))
         epoch = state['epoch']
         step = state['step']
-        best_jac = state['jac']
+        best_jac = 0
         new_state_dict = OrderedDict()
         for k, v in state['model'].items():
           name = k.replace("module.","") # remove module.
