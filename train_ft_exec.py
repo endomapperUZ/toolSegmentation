@@ -34,7 +34,7 @@ folds = ["train_data/train_raw"]
 train_heights = [1056]
 train_widths = [1440]
 val_heights = [1056]
-val_widths = [1920]
+val_widths = [1440]
 
 def main():
     parser = argparse.ArgumentParser()
