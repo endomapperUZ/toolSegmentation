@@ -30,9 +30,11 @@ from albumentations import (
     CenterCrop
 )
 
-folds = ["train_data/video9_raw","train_data/video6_raw","train_data/video39_raw"]
-heights = [1056,1056,1056]
-widths = [1920,1920,1440]
+folds = ["train_data/train_raw"]
+train_heights = [1056]
+train_widths = [1440]
+val_heights = [1056]
+val_widths = [1920]
 
 def main():
     parser = argparse.ArgumentParser()
@@ -67,10 +69,10 @@ def main():
         )
 
     fold = folds[args.fold]
-    train_crop_height = heights[args.fold]
-    train_crop_width = widths[args.fold]
-    val_crop_height = heights[args.fold]
-    val_crop_width = widths[args.fold]
+    train_crop_height = train_heights[args.fold]
+    train_crop_width = train_widths[args.fold]
+    val_crop_height = val_heights[args.fold]
+    val_crop_width = val_widths[args.fold]
 
     train_file_names, val_file_names = get_split(args.root, fold, args.train_size)
 
