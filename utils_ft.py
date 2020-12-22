@@ -56,6 +56,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
         state = torch.load(str(new_model_path))
         epoch = state['epoch']
         step = state['step']
+        best_jac = state['jac']
         new_state_dict = OrderedDict()
         for k, v in state['model'].items():
           name = k.replace("module.","") # remove module.
@@ -68,6 +69,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
         state = torch.load(str(model_path))
         epoch = state['epoch']
         step = state['step']
+        best_jac = state['jac']
         new_state_dict = OrderedDict()
         for k, v in state['model'].items():
           name = k.replace("module.","") # remove module.
@@ -79,17 +81,18 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
     else:
         epoch = 1
         step = 0
+        best_jac = 0
 
     save = lambda ep: torch.save({
         'model': model.state_dict(),
         'epoch': ep,
         'step': step,
+        'jac': best_jac
     }, str(new_model_path)) # .replace('models','models_ft'))
 
     report_each = 10
     log = root.joinpath('train_{}_{}.log'.format(model_name,num_mod)).open('at', encoding='utf8')
     valid_losses = []
-    best_jac = 0
     for epoch in range(epoch, n_epochs + 1):
         model.train()
         random.seed()
@@ -133,8 +136,10 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
             valid_losses.append(valid_loss)
             valid_jac = valid_metrics['jaccard_loss']
             if valid_jac > best_jac:
-              save(epoch + 1)
               best_jac = valid_jac
+              save(epoch + 1)
+            else:
+                state['epoch'] = epoch + 1              
             print('Best model jaccard : '+ str(best_jac))
         except KeyboardInterrupt:
             tq.close()
