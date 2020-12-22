@@ -10,8 +10,8 @@ python train_ft_exec.py \
     --jaccard-weight 0.3 \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
-    --batch-size 8 \
-    --n-epochs 40 \
+    --batch-size 12 \
+    --n-epochs 30 \
     --lr 0.0001 \
     --workers 3 \
     --num_classes 1 \
@@ -26,8 +26,8 @@ python train_ft_exec.py \
     --jaccard-weight 0.3 \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
-    --batch-size 8 \
-    --n-epochs 60 \
+    --batch-size 12 \
+    --n-epochs 40 \
     --lr 0.00001 \
     --workers 3 \
     --num_classes 1 \
