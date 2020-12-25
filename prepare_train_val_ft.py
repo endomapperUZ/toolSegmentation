@@ -6,6 +6,7 @@ def get_split(root, fold, train_size ):
   train_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/*.png") 
   #train_file_names = []
   #val_file_names = []
+  train_path.sort()
   num_files = len(train_path)
   print(num_files)
   #file_ind = [k for k in range(num_files)]
@@ -16,6 +17,7 @@ def get_split(root, fold, train_size ):
     #val_file_names.append(train_path[file_ind[m]])
   train_file_names = train_path[:int(num_files*train_size)]
   val_file_names = train_path[int(num_files*train_size):]
+  print(val_file_names)
   print(len(train_file_names))
   print(len(val_file_names))
   #file_name = "train_val_dataset"+fold.replace('train_data/','').replace('_raw','')+".txt"
