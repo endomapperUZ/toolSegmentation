@@ -15,8 +15,8 @@ def get_split(root, fold, train_size ):
     #train_file_names.append(train_path[file_ind[i]])
   #for m in range(int(num_files*train_size), num_files):
     #val_file_names.append(train_path[file_ind[m]])
-  train_file_names = train_path[:int(num_files*train_size)]
-  val_file_names = train_path[int(num_files*train_size):]
+  train_file_names = train_path[:4:int(num_files*train_size)]
+  val_file_names = train_path[int(num_files*train_size):4:]
   print(val_file_names)
   random.shuffle(train_file_names)
   random.shuffle(val_file_names)
