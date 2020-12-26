@@ -15,7 +15,7 @@ python train_ft_exec.py \
     --lr 0.001 \
     --workers 3 \
     --num_classes 1 \
-    --train_size 0.6568
+    --train_size 0.80835
 
 python train_ft_exec.py \
     --model_path data/models/linknet_binary_20/model_0.pt \
@@ -31,5 +31,5 @@ python train_ft_exec.py \
     --lr 0.0001 \
     --workers 3 \
     --num_classes 1 \
-    --train_size 0.6568 
+    --train_size 0.80835
 
