@@ -137,9 +137,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
             valid_jac = valid_metrics['jaccard_loss']
             if valid_jac > best_jac:
               best_jac = valid_jac
-              save(epoch + 1)
-            else:
-                state['epoch'] = epoch + 1              
+              save(n_epochs)            
             print('Best model jaccard : '+ str(best_jac))
         except KeyboardInterrupt:
             tq.close()
