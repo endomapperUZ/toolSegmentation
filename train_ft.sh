@@ -33,3 +33,34 @@ python train_ft_exec.py \
     --num_classes 1 \
     --train_size 0.80835
 
+python train_ft_exec.py \
+    --model_path data/models/linknet_binary_20/model_0.pt \
+    --model_type LinkNet34 \
+    --model_name linknet \
+    --num_mod 0 \
+    --type_mod ent \
+    --jaccard-weight 0.3 \
+    --fold 0 \
+    --root /home/ropert/ctomasin/storage/toolSegmentation \
+    --batch-size 8 \
+    --n-epochs 35 \
+    --lr 0.00001 \
+    --workers 3 \
+    --num_classes 1 \
+    --train_size 0.80835
+
+python train_ft_exec.py \
+    --model_path data/models/linknet_binary_20/model_0.pt \
+    --model_type LinkNet34 \
+    --model_name linknet \
+    --num_mod 0 \
+    --type_mod ent \
+    --jaccard-weight 0.3 \
+    --fold 0 \
+    --root /home/ropert/ctomasin/storage/toolSegmentation \
+    --batch-size 8 \
+    --n-epochs 40 \
+    --lr 0.000001 \
+    --workers 3 \
+    --num_classes 1 \
+    --train_size 0.80835
