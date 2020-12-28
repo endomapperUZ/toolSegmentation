@@ -7,7 +7,7 @@ python train_ft_exec.py \
     --model_name linknet \
     --num_mod 0 \
     --type_mod ent \
-    --jaccard-weight 0.5 \
+    --jaccard-weight 0.3 \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
@@ -23,7 +23,7 @@ python train_ft_exec.py \
     --model_name linknet \
     --num_mod 0 \
     --type_mod ent \
-    --jaccard-weight 0.5 \
+    --jaccard-weight 0.3 \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
