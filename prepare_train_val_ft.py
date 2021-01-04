@@ -17,10 +17,8 @@ def get_split(root, fold, train_size ):
     #val_file_names.append(train_path[file_ind[m]])
   train_file_names = train_path[:int(num_files*train_size)]
   val_file_names = train_path[int(num_files*train_size):]
-  print(val_file_names)
   random.shuffle(train_file_names)
   random.shuffle(val_file_names)
-  print(val_file_names) 
   print(len(train_file_names))
   print(len(val_file_names))
   #file_name = "train_val_dataset"+fold.replace('train_data/','').replace('_raw','')+".txt"
