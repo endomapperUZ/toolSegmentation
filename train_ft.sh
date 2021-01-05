@@ -11,7 +11,7 @@ python train_ft_exec.py \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
-    --n-epochs 40 \
+    --n-epochs 70 \
     --lr 0.001 \
     --workers 3 \
     --num_classes 1 \
@@ -27,7 +27,7 @@ python train_ft_exec.py \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
-    --n-epochs 60 \
+    --n-epochs 120 \
     --lr 0.0001 \
     --workers 3 \
     --num_classes 1 \
