@@ -2,7 +2,7 @@
 n_epochs=80
 
 python train_ft_exec.py \
-    --model_path data/models/linknet_binary_20/model_0_ent_15.pt \
+    --model_path data/models_ft/linknet_binary_20/model_0_ent_15.pt \
     --model_type LinkNet34 \
     --model_name linknet \
     --num_mod 0 \
@@ -18,7 +18,7 @@ python train_ft_exec.py \
     --train_size 0.84426
 
 python train_ft_exec.py \
-    --model_path data/models/linknet_binary_20/model_0.pt \
+    --model_path data/models_ft/linknet_binary_20/model_0_ent_15.pt \
     --model_type LinkNet34 \
     --model_name linknet \
     --num_mod 0 \
