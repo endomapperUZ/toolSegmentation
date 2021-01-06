@@ -9,7 +9,7 @@ python train_ft_exec.py \
     --type_mod ent \
     --jaccard-weight 0.3 \
     --fold 0 \
-    --root /home/ropert/ctomasin/storage/toolSegmentation \
+    --root /workspace/ctomasin/toolSegmentation \
     --batch-size 8 \
     --n-epochs 100 \
     --lr 0.0001 \
@@ -25,7 +25,7 @@ python train_ft_exec.py \
     --type_mod ent \
     --jaccard-weight 0.3 \
     --fold 0 \
-    --root /home/ropert/ctomasin/storage/toolSegmentation \
+    --root /workspace/ctomasin/toolSegmentation \
     --batch-size 8 \
     --n-epochs 120 \
     --lr 0.00001 \
