@@ -10,7 +10,7 @@ python train_ft_exec.py \
     --jaccard-weight 0.6 \
     --fold 0 \
     --root /workspace/ctomasin/toolSegmentation \
-    --batch-size 12 \
+    --batch-size 8 \
     --n-epochs 30 \
     --lr 0.0001 \
     --workers 3 \
@@ -26,7 +26,7 @@ python train_ft_exec.py \
     --jaccard-weight 0.6 \
     --fold 0 \
     --root /workspace/ctomasin/toolSegmentation \
-    --batch-size 12 \
+    --batch-size 8 \
     --n-epochs 40 \
     --lr 0.00001 \
     --workers 3 \
