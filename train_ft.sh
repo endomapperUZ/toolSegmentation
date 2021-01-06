@@ -1,8 +1,8 @@
 #!/bin/bash
-n_epochs=20
+n_epochs=80
 
 python train_ft_exec.py \
-    --model_path data/models/linknet_binary_20/model_0.pt \
+    --model_path data/models/linknet_binary_20/model_0_ent_15.pt \
     --model_type LinkNet34 \
     --model_name linknet \
     --num_mod 0 \
@@ -11,8 +11,8 @@ python train_ft_exec.py \
     --fold 0 \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
-    --n-epochs 70 \
-    --lr 0.001 \
+    --n-epochs 100 \
+    --lr 0.0001 \
     --workers 3 \
     --num_classes 1 \
     --train_size 0.84426
@@ -28,7 +28,7 @@ python train_ft_exec.py \
     --root /home/ropert/ctomasin/storage/toolSegmentation \
     --batch-size 8 \
     --n-epochs 120 \
-    --lr 0.0001 \
+    --lr 0.00001 \
     --workers 3 \
     --num_classes 1 \
     --train_size 0.84426
