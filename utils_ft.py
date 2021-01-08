@@ -137,7 +137,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
             #print('Valid loss: {:.5f}, jaccard: {:.5f}'.format(valid_loss, valid_jaccard))
             if valid_jac > best_jac:
               best_jac = valid_jac
-              save(n_epochs)            
+              save(n_epochs+1)            
             print('Best model jaccard : '+ str(best_jac))
         except KeyboardInterrupt:
             tq.close()
