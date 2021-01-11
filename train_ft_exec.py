@@ -32,9 +32,9 @@ from albumentations import (
 
 folds = ["train_data/train_raw"]
 train_heights = [1056]
-train_widths = [1440]
+train_widths = [1280]
 val_heights = [1056]
-val_widths = [1440]
+val_widths = [1280]
 
 def main():
     parser = argparse.ArgumentParser()
