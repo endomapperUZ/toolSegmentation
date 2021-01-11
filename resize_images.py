@@ -69,5 +69,32 @@ def main():
     else:
       print('No mask resize necessary')
 
+  for i in range(14267,len(files_train)):
+    mask_file_name9 = files_train[i]
+    img_file_name9 = mask_file_name9.replace('masks','raw').replace('mask','frame')
+    image = load_image(mask_file_name9)
+    mask = load_mask(mask_file_name9,'binary')
+    print(i)
+    print('shape image before resize : '+ str(image.shape))
+    if (image.shape==(1080, 1920, 3)):
+      image = image[24:, 640:,:]
+      print('shape image after resize : '+ str(image.shape))
+
+      image = image[:,:,::-1]
+      print(img_file_name9)
+      os.remove(img_file_name9)
+      cv2.imwrite(img_file_name9, image)  
+    else :
+      print('No resize necessary')
+
+    print('shape mask before resize : '+ str(mask.shape))
+    if (mask.shape==(1080,1920)):
+      mask = mask[24:,640:]
+      print('shape mask after resize : '+ str(mask.shape))
+
+      os.remove(mask_file_name9)
+      cv2.imwrite(mask_file_name9, mask)
+    else:
+      print('No mask resize necessary')
 if __name__ == '__main__':
     main()
