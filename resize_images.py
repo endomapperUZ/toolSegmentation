@@ -31,7 +31,13 @@ def main():
       cv2.imwrite(mask_file_name39, mask)
       cv2.imwrite(img_file_name39, image)
     else :     
-      print('No resize necessary')
+      print('No image resize necessary')
+      
+    if (mask.shape==(1080,1440)):
+      mask = mask[24:,:]
+    else:
+      print('No mask resize necessary')
+
 
   for i in range(3168,14267):
     mask_file_name6 = files_train[i]
@@ -55,5 +61,11 @@ def main():
       cv2.imwrite(img_file_name6, image)  
     else :
       print('No resize necessary')
+
+    if (mask.shape==(1080,19200)):
+      mask = mask[24:,640:]
+    else:
+      print('No mask resize necessary')
+
 if __name__ == '__main__':
     main()
