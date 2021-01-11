@@ -21,20 +21,21 @@ def main():
       image = image[24:,:,:]
       print('shape image after resize : '+ str(image.shape))
 
-      print('shape mask : '+ str(mask.shape))
-
       image = image[:,:,::-1]
       img_file_name39 = mask_file_name39.replace('masks','raw').replace('mask','frame')
       print(img_file_name39)
       os.remove(img_file_name39)
-      os.remove(mask_file_name39)
-      cv2.imwrite(mask_file_name39, mask)
       cv2.imwrite(img_file_name39, image)
     else :     
       print('No image resize necessary')
-      
+
+    print('shape mask before resize : '+ str(mask.shape))
     if (mask.shape==(1080,1440)):
       mask = mask[24:,:]
+      print('shape mask after resize : '+ str(mask.shape))
+
+      os.remove(mask_file_name39)
+      cv2.imwrite(mask_file_name39, mask)
     else:
       print('No mask resize necessary')
 
@@ -50,20 +51,21 @@ def main():
       image = image[24:, 640:,:]
       print('shape image after resize : '+ str(image.shape))
 
-      print('shape mask : '+ str(mask.shape))
-
       image = image[:,:,::-1]
       img_file_name6 = mask_file_name6.replace('masks','raw').replace('mask','frame')
       print(img_file_name6)
       os.remove(img_file_name6)
-      os.remove(mask_file_name6)
-      cv2.imwrite(mask_file_name6, mask)
       cv2.imwrite(img_file_name6, image)  
     else :
       print('No resize necessary')
 
-    if (mask.shape==(1080,19200)):
+    print('shape mask before resize : '+ str(mask.shape))
+    if (mask.shape==(1080,1920)):
       mask = mask[24:,640:]
+      print('shape mask after resize : '+ str(mask.shape))
+
+      os.remove(mask_file_name6)
+      cv2.imwrite(mask_file_name6, mask)
     else:
       print('No mask resize necessary')
 
