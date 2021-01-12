@@ -7,7 +7,7 @@ import glob
 import os
 
 def main():
-  files_train = glob.glob('/workspace/ctomasin/toolSegmentation/data/train_data/train_masks/video15_1*.png')
+  files_train = glob.glob('/workspace/ctomasin/toolSegmentation/data/train_data/train_masks/video15*.png')
   files_train.sort()
   print(len(files_train))
   for i in range(len(files_train)):
@@ -17,8 +17,8 @@ def main():
     mask = load_mask(mask_file_name6,'binary')
     print(i)
     print('shape image before resize : '+ str(image.shape))
-    if (image.shape==(1056, 1920, 3)):
-      image = image[:, 640:,:]
+    if (image.shape==(1080, 1920, 3)):
+      image = image[24:, 640:,:]
       print('shape image after resize : '+ str(image.shape))
 
       image = image[:,:,::-1]
@@ -30,8 +30,8 @@ def main():
       print('No resize necessary')
 
     print('shape mask before resize : '+ str(mask.shape))
-    if (mask.shape==(1056,1920)):
-      mask = mask[:,640:]
+    if (mask.shape==(1080,1920)):
+      mask = mask[24:,640:]
       print('shape mask after resize : '+ str(mask.shape))
 
       os.remove(mask_file_name6)
