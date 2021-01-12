@@ -7,7 +7,7 @@ import glob
 import os
 
 def main():
-  files_train = glob.glob('/workspace/ctomasin/toolSegmentation/data/train_data/train_masks/video13*.png')
+  files_train = glob.glob('/workspace/ctomasin/toolSegmentation/data/train_data/train_masks/video15_1*.png')
   files_train.sort()
   print(len(files_train))
   for i in range(len(files_train)):
