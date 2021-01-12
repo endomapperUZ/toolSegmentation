@@ -6,9 +6,11 @@ def get_split(root, fold, train_files, val_files):
   train_file_names = []
   val_file_names = []
   for file in train_files:
+    print(file)
     train_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
     train_path.sort()
     train_file_names.append(train_path)
+    print(len(train_path))
 
   for file in val_files:
     val_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
