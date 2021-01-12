@@ -35,7 +35,7 @@ train_heights = [1056]
 train_widths = [1280]
 val_heights = [1056]
 val_widths = [1280]
-train_files = ['video6','video39']
+train_files = ['video6']
 val_files = ['video13','video15_1']
 
 def main():
