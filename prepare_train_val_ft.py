@@ -9,13 +9,15 @@ def get_split(root, fold, train_files, val_files):
     print(file)
     train_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
     train_path.sort()
-    train_file_names.append(train_path)
-    print(len(train_path))
+    for path in train_path:
+      train_file_names.append(path)
 
   for file in val_files:
+    print(file)
     val_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
     val_path.sort()
-    val_file_names.append(val_path)
+    for path in val_path:
+      val_file_names.append(path)
 
   random.shuffle(train_file_names)
   random.shuffle(val_file_names)
