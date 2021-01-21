@@ -23,4 +23,4 @@ The following table shows several representative examples of the segmentations o
 
 [2] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
 
-![results2](/images/Resumen_Resultados - Sheet1-2.png)
+![results2](/images/resultados2_2.png)
