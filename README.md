@@ -9,7 +9,7 @@ The main goal is to obtain a tool segmentation model adapted to the requirements
 Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## How to run
-Fine-tuned models are available at https://drive.google.com/drive/folders/1VOtD3U9jF4jPsPlZfU0LD3yXx0oI8d8-?usp=sharing
+Fine-tuned models are available at https://drive.google.com/drive/folders/1VOtD3U9jF4jPsPlZfU0LD3yXx0oI8d8-?usp=sharing. Best models obtained are Linknet models number 21 and 22 and Mininet.
 
 XML files containing masks coordinates for UCL frames are available at https://drive.google.com/drive/folders/1bIv1w320DhIB3AW0UWRPtRgjlG4ephs5?usp=sharing
 
