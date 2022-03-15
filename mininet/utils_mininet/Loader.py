@@ -32,8 +32,9 @@ class Loader:
         print('Reading files...')
 
         # Load filepaths
-        files = glob.glob(os.path.join(dataFolderPath, '*', '*', '*'))
-
+        print(dataFolderPath)
+        files = glob.glob(os.path.join(dataFolderPath,'*','*','*'))
+        print(files)
         print('Structuring test and train files...')
         self.test_list = [file for file in files if 'test' in file]
         self.train_list = [file for file in files if 'train' in file]
@@ -171,7 +172,7 @@ class Loader:
         :param file_path: path to the label image
         :return: return the loaded label image
         '''
-        return (cv2.imread(file_path, 0)>0)
+        return (cv2.imread(file_path, 0))
 
 
 
@@ -195,21 +196,15 @@ class Loader:
 
         img = self.load_image(image_list[index])
         label = self.load_label(label_list[index])
-        #label = (cv2.imread(label_list[index], 0)>0)
-        #print(label)
         mask_image = np.ones([self.height, self.width], dtype=np.float32)
-        #print(label.shape)
-        #print(label_list[index])
+
         # Reshape images if its needed
         if img.shape[1] != self.width or img.shape[0] != self.height:
             img = cv2.resize(img, (self.width, self.height), interpolation=cv2.INTER_AREA)
         if label.shape[1] != self.width or label.shape[0] != self.height:
-            #print(label_list[index])
-            #print(label.shape[1])
-            #print(label.shape[0])
             #print(label)
             label = cv2.resize(label, (self.width, self.height), interpolation=cv2.INTER_NEAREST)
-            #print(label)
+        label = label>0
         # modify the mask and the labels. Mask
         mask_ignore = label >= self.n_classes
         mask_image[mask_ignore] = 0  # The ignore pixels will have a value o 0 in the mask

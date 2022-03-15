@@ -45,11 +45,9 @@ def convert_to_tensors(list_to_convert):
 
 # restores a checkpoint model
 def restore_state(model, checkpoint):
-    print('restore')
     try:
-        print('load')
         model.load_weights(checkpoint)
-        print('Modelloaded')
+        print('Model loaded')
     except Exception as e:
         print('Model not loaded: ' + str(e))
 
@@ -174,6 +172,8 @@ def get_metrics(loader, model, loss_function, n_classes, train=True, flip_infere
 
     if train:
         samples = len(loader.image_train_list)
+        tq = tqdm.tqdm(total=(samples))
+        tq.set_description('Train Evaluation')
     else:
         samples = len(loader.image_test_list)
         tq = tqdm.tqdm(total=(samples))
@@ -207,10 +207,10 @@ def get_metrics(loader, model, loss_function, n_classes, train=True, flip_infere
         mIoU.update_state(labels, predictions)
 
         losses.append(loss_function(y, y_))
-        if train != True:
-          tq.update(1)
-    if train != True:
-      tq.close()
+        #if train != True:
+        tq.update(1)
+    #if train != True:
+    tq.close()
     # get the train and test accuracy from the model
     miou_result = mIoU.result()
     acc_result = accuracy.result()

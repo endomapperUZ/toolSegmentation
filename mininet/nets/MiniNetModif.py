@@ -258,7 +258,7 @@ class MiniNetv2(tf.keras.Model):
         x = self.conv_mod_11(x, training=training)
         x = self.conv_mod_12(x, training=training)
         x = self.conv_mod_13(x, training=training)
-                
+        """        
         if self.include_top:
             
             x = self.up1(x, training=training)
@@ -273,10 +273,235 @@ class MiniNetv2(tf.keras.Model):
             if reshape:
                 x = reshape_into(x, inputs)
             x = tf.keras.activations.softmax(x, axis=-1)
-        
+        """
 
+        return x
+    
+class MiniNetDecod(tf.keras.Model):
+
+    def __init__(self, num_classes, include_top, **kwargs):
+        super(MiniNetDecod, self).__init__(**kwargs)
+        self.down_b = MininetV2Downsample(3, 16)
+        self.down_b2 = MininetV2Downsample(16, 64)
+
+        self.down1 = MininetV2Downsample(3, 16)
+        self.conv_mod_0 = MininetV2Module(32, 3, strides=1, dilation_rate=1)
+
+        self.down2 = MininetV2Downsample(16, 64)
+        self.conv_mod_1 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_2 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_3 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_4 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_5 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.down3 = MininetV2Downsample(64, 128)
+        self.conv_mod_6 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_7 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_8 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_9 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=16)
+        self.conv_mod_10 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=1)
+        self.conv_mod_11 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_12 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_13 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_14 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_15 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+
+        self.up1 = MininetV2Upsample(64)
+        self.classify = MininetV2Upsample(num_classes)
+        self.include_top=include_top
+        
+    def call(self, input_1, input_2 , training=True, reshape=True):
+        """
+        x1 = self.down1(inputs, training=training)
+        x2 = self.down2(x1, training=training)
+        x = self.conv_mod_1(x2, training=training)
+        x = self.conv_mod_2(x, training=training)
+        x = self.conv_mod_3(x, training=training)
+        x = self.conv_mod_4(x, training=training)
+        x3 = self.conv_mod_5(x, training=training)
+        x = self.down3(x3, training=training)
+        x = self.conv_mod_6(x, training=training)
+        x = self.conv_mod_7(x, training=training)
+        x = self.conv_mod_8(x, training=training)
+        x = self.conv_mod_9(x, training=training)
+        x = self.conv_mod_10(x, training=training)
+        x = self.conv_mod_11(x, training=training)
+        x = self.conv_mod_12(x, training=training)
+        x = self.conv_mod_13(x, training=training)
+        """        
+        #if self.include_top:
+        
+        x = self.up1(input_2, training=training)
+        
+        aux = self.down_b2(self.down_b(input_1, training=training))
+        x = x + aux
+
+        x = self.conv_mod_14(x, training=training)
+        x = self.conv_mod_15(x, training=training)
+        
+        x = self.classify(x, training=training, last=True)
+        if reshape:
+            x = reshape_into(x, input_1)
+        x = tf.keras.activations.softmax(x, axis=-1)
         
 
         return x
 
- 
+class MiniNetClassif(tf.keras.Model):
+
+    def __init__(self, **kwargs):
+        
+        super(MiniNetClassif, self).__init__(**kwargs)
+        """
+        self.down_b = MininetV2Downsample(3, 16)
+        self.down_b2 = MininetV2Downsample(16, 64)
+
+        self.down1 = MininetV2Downsample(3, 16)
+        self.conv_mod_0 = MininetV2Module(32, 3, strides=1, dilation_rate=1)
+
+        self.down2 = MininetV2Downsample(16, 64)
+        self.conv_mod_1 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_2 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_3 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_4 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_5 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.down3 = MininetV2Downsample(64, 128)
+        self.conv_mod_6 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_7 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_8 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_9 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=16)
+        self.conv_mod_10 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=1)
+        self.conv_mod_11 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_12 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_13 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_14 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_15 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+
+        self.up1 = MininetV2Upsample(64)
+        self.classify = MininetV2Upsample(num_classes)
+        self.include_top=include_top
+        """
+        #self.layer_input_1 = tf.keras.Input(shape=input_shape)
+        #self.model = model
+        #self.index = index
+
+    def call(self, inputs, training=True, reshape=True):
+        """
+        x1 = self.down1(inputs, training=training)
+        x2 = self.down2(x1, training=training)
+        x = self.conv_mod_1(x2, training=training)
+        x = self.conv_mod_2(x, training=training)
+        x = self.conv_mod_3(x, training=training)
+        x = self.conv_mod_4(x, training=training)
+        x3 = self.conv_mod_5(x, training=training)
+        x = self.down3(x3, training=training)
+        x = self.conv_mod_6(x, training=training)
+        x = self.conv_mod_7(x, training=training)
+        x = self.conv_mod_8(x, training=training)
+        x = self.conv_mod_9(x, training=training)
+        x = self.conv_mod_10(x, training=training)
+        x = self.conv_mod_11(x, training=training)
+        x = self.conv_mod_12(x, training=training)
+        x = self.conv_mod_13(x, training=training)
+        """        
+        #if self.include_top:
+        """    
+        x = self.up1(x, training=training)
+
+        aux = self.down_b2(self.down_b(inputs, training=training))
+        x = x + aux
+
+        x = self.conv_mod_14(x, training=training)
+        x = self.conv_mod_15(x, training=training)
+        
+        x = self.classify(x, training=training, last=True)
+        if reshape:
+            x = reshape_into(x, inputs)
+        x = tf.keras.activations.softmax(x, axis=-1)
+        """
+        x = tf.keras.layers.GlobalAveragePooling2D()(inputs, training)
+        x = tf.keras.layers.Dense(1,activation=tf.nn.sigmoid)(x)
+
+        return x
+
+
+class MiniNetEncodClassif(tf.keras.Model):
+
+    def __init__(self, num_classes, include_top, **kwargs):
+        super(MiniNetEncodClassif, self).__init__(**kwargs)
+        """
+        self.down_b = MininetV2Downsample(3, 16)
+        self.down_b2 = MininetV2Downsample(16, 64)
+
+        self.down1 = MininetV2Downsample(3, 16)
+        self.conv_mod_0 = MininetV2Module(32, 3, strides=1, dilation_rate=1)
+
+        self.down2 = MininetV2Downsample(16, 64)
+        self.conv_mod_1 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_2 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_3 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_4 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_5 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.down3 = MininetV2Downsample(64, 128)
+        self.conv_mod_6 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_7 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_8 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_9 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=16)
+        self.conv_mod_10 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=1)
+        self.conv_mod_11 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=2)
+        self.conv_mod_12 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=4)
+        self.conv_mod_13 = MininetV2Module_dil(128, 3, strides=1, dilation_rate=8)
+        self.conv_mod_14 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+        self.conv_mod_15 = MininetV2Module(64, 3, strides=1, dilation_rate=1)
+
+        self.up1 = MininetV2Upsample(64)
+        """
+        self.basemod = MiniNetv2(num_classes=2, include_top=False)
+        #self.classify = MininetV2Upsample(num_classes)
+        self.include_top=include_top
+        self.globav = tf.keras.layers.GlobalAveragePooling2D()
+        self.densfin = tf.keras.layers.Dense(1,activation=tf.nn.sigmoid)
+        
+        
+
+    def call(self, inputs, training=True, reshape=True):
+        """
+        x1 = self.down1(inputs, training=training)
+        x2 = self.down2(x1, training=training)
+        x = self.conv_mod_1(x2, training=training)
+        x = self.conv_mod_2(x, training=training)
+        x = self.conv_mod_3(x, training=training)
+        x = self.conv_mod_4(x, training=training)
+        x3 = self.conv_mod_5(x, training=training)
+        x = self.down3(x3, training=training)
+        x = self.conv_mod_6(x, training=training)
+        x = self.conv_mod_7(x, training=training)
+        x = self.conv_mod_8(x, training=training)
+        x = self.conv_mod_9(x, training=training)
+        x = self.conv_mod_10(x, training=training)
+        x = self.conv_mod_11(x, training=training)
+        x = self.conv_mod_12(x, training=training)
+        x = self.conv_mod_13(x, training=training)
+        """
+        x = self.basemod(inputs,training=training)
+        x = self.globav(x, training=training)
+        x = self.densfin(x)
+        """      
+        if self.include_top:
+            
+            x = self.up1(x, training=training)
+
+            aux = self.down_b2(self.down_b(inputs, training=training))
+            x = x + aux
+
+            x = self.conv_mod_14(x, training=training)
+            x = self.conv_mod_15(x, training=training)
+            
+            x = self.classify(x, training=training, last=True)
+            if reshape:
+                x = reshape_into(x, inputs)
+            x = tf.keras.activations.softmax(x, axis=-1)
+        """
+
+        
+
+        return x
