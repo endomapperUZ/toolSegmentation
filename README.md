@@ -10,7 +10,7 @@ This repository is built on a fork of projects **robot-surgery-segmentation** (a
 
 and **MiniNet-v2** (at https://github.com/Shathe/MiniNet-v2), the official implementation of the paper
 
-[2]*MiniNet: An Efficient Semantic Segmentation ConvNet for Real-time Robotic Applications*. Alonso, Iñigo et al. IEEE Transactions on Robotics. 2020.
+[2] *MiniNet: An Efficient Semantic Segmentation ConvNet for Real-time Robotic Applications*. Alonso, Iñigo et al. IEEE Transactions on Robotics. 2020.
 
 The main goal is to obtain a tool segmentation model adapted to the requirements of the project **EndoMapper**.
 
