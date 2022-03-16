@@ -10,8 +10,8 @@ from datetime import datetime
 import json
 import tqdm
 
-import utils_mininet.Loader as Loader
-from utils_mininet.utils import get_params, preprocess, lr_decay, convert_to_tensors, restore_state, apply_augmentation, get_metrics,init_model
+import utils_mininet_classif.Loader as Loader
+from utils_mininet_classif.utils import get_params, preprocess, lr_decay, convert_to_tensors, restore_state, apply_augmentation, get_metrics,init_model, inference
 import nets.MiniNetv2 as MiniNetv2
 import nets.ResNet50 as ResNet50
 
@@ -29,6 +29,7 @@ def main():
   arg('--zoom_augmentation',type=float)
 
   args = parser.parse_args()
+  
   device_name = tf.test.gpu_device_name()
   print(device_name)
   if device_name != '/device:GPU:0':
@@ -36,20 +37,22 @@ def main():
   print('Found GPU at: {}'.format(device_name))
  
 
-  def train_step(model, x, y, mask, loss_function, optimizer, size_input, zoom_factor):
+  def train_step(model, x, y, label, loss_function, optimizer, size_input, zoom_factor):
     with tf.GradientTape() as tape: 
-
-      [x, y, mask] = convert_to_tensors([x, y, mask]) # convert numpy data to tensors
-      mask = tf.expand_dims(mask, axis=-1) 
-
-      x, y, mask = apply_augmentation(x, y, mask, size_input, zoom_factor) # Do data augmentation
-      y_ = model(x, training=True)  # get output of the model, prediction
-
-      y *= mask # Apply mask to ignore labels
-
+      #accuracy = tf.metrics.BinaryAccuracy()
+      [x, y, label] = convert_to_tensors([x, y, label]) # convert numpy data to tensors
+        
+      x, y, label = apply_augmentation(x, y, label, size_input, zoom_factor) # Do data augmentation
+      #print(x) 
+      y_ = model(x,training = True)
+      #y_ = np.round(y_)
+      #y_ = tf.cast((y_>0.5),np.uint8)
+      # get output of the model, prediction
+      #print(y,y_)
       loss = loss_function(y, y_) # apply loss function
-      # print(loss)
-
+      #print(loss)
+      #accuracy.update_state(y, y_)
+      #print(accuracy.result())
     gradients = tape.gradient(loss, model.trainable_variables)
     optimizer.apply_gradients(zip(gradients, model.trainable_variables))# Apply gradientes
 
@@ -62,7 +65,7 @@ def main():
     # Parameters for training
     training_samples = len(loader.image_train_list)
     steps_per_epoch = int(training_samples / config['batch_size']) + 1
-    best_miou = 0
+    best_acc = 0
     for epoch in range(config['epochs']):  # for each epoch
         lr_decay(lr, config['init_lr'], 1e-9, epoch, config['epochs'] - 1)  # compute the new learning rate
         print('epoch: ' + str(epoch+1) + '. Learning rate: ' + str(lr.numpy()))
@@ -70,39 +73,43 @@ def main():
         tq.set_description('Epoch {}, lr {}'.format(epoch+1, lr.numpy()))
         for step in range(steps_per_epoch):  # for every batch
             # get batch
-            x, y, mask, path = loader.get_batch(size=config['batch_size'], train=True)
-
+            x, y, label, path = loader.get_batch(size=config['batch_size'], train=True, val=False)
+            #print(path)
             x = preprocess(x, mode=preprocess_mode) # preprocess data
 
             # do a train step 
-            loss = train_step(model, x, y, mask, loss_function, optimizer, (config['height_train'], config['width_train']), config['zoom_augmentation'])
+            loss  = train_step(model, x, y, label, loss_function, optimizer, (config['height_train'], config['width_train']), config['zoom_augmentation'])
+            
             tq.update(1)
             step_num += 1
             tq.set_postfix(loss='{:.5f}'.format(loss.numpy()))
             write_event(log,step_num,loss = float(loss.numpy()))
         print('done steps')
         tq.close()
-        train_acc, train_miou, train_loss = get_metrics(loader, model, loss_function, loader.n_classes, train=True, flip_inference=False, preprocess_mode=preprocess_mode, optimizer=optimizer, scales=[1])
+        train_acc, train_loss = get_metrics(loader, model, loss_function, loader.n_classes, val=False, train=True, flip_inference=False, preprocess_mode=preprocess_mode, optimizer=optimizer, scales=[1])
         print('done metrics')
-        print('Train miou :'+str(train_miou.numpy()))
-        train_metrics = {'train_acc': float(train_acc.numpy()), 'train_miou': float(train_miou.numpy()), 'train_loss' : float(train_loss)}
+        train_metrics = {'train_acc': float(train_acc.numpy()), 'train_loss' : float(train_loss)}
         write_event(log, step_num, **train_metrics)   
         # When the epoch finishes, evaluate the model
+        print('train_acc : '+ str(train_acc.numpy()))
         if evaluation: 
             print('evaluation')
-            test_acc, test_miou, valid_loss = get_metrics(loader, model, loss_function, loader.n_classes, train=False, flip_inference=False, preprocess_mode=preprocess_mode, optimizer=optimizer, scales=[1])
+            test_acc, valid_loss = get_metrics(loader, model, loss_function, loader.n_classes,val=False, train=False, flip_inference=False, preprocess_mode=preprocess_mode, optimizer=optimizer, scales=[1])
             print('Test accuracy: ' + str(test_acc.numpy()))
-            print('Test miou: ' + str(test_miou.numpy()))
-            valid_metrics = {'test_acc': float(test_acc.numpy()), 'test_miou': float(test_miou.numpy()),'test_loss' : float(valid_loss)}
+            print('Test loss: ' + str(valid_loss))
+            valid_metrics = {'test_acc': float(test_acc.numpy()),'test_loss' : float(valid_loss)}
             write_event(log, step_num, **valid_metrics)
             # save model if best model
-            if test_miou.numpy() > best_miou:
-                best_miou = test_miou.numpy()
+            if test_acc.numpy() > best_acc:
+                best_acc = test_acc.numpy()
                 model.save_weights(name_best_model)
-
-            print('Current Best model miou: ' + str(best_miou))
+                print('Val model')
+                val_acc, val_loss = get_metrics(loader, model, loss_function, loader.n_classes,val=True, train=False, 
+                        flip_inference=False, preprocess_mode=preprocess_mode, optimizer=optimizer, scales=[1])
+                print('Val accuracy: ' + str(val_acc.numpy()))
+            print('Current Best model accuracy: ' + str(best_acc))
             print('')
-
+            
         else:
             model.save_weights(name_best_model)
 
@@ -121,20 +128,22 @@ def main():
   CONFIG['epochs'] = args.epochs # Number of epochs to train
 
   # Training loop
-
-  datafiles = ['conf2']
-
+  #datafiles = ['video6','video9','video39']
+  #datafiles = ['kvasir_instrument']
+  datafiles = ['/datasets/conf2/tool_notool']
+  #datafiles = ['endo17dataset_multi/fold2/']
   widths = [1280]
   heights = [1056]
+  #widths = [640]
+  #heights = [480]
 
-
-  model_name = 'model_0'
-  print(args.path)
+  model_name = 'model1_0'
   log = Path(args.path).joinpath('train_{}.log'.format(model_name)).open('at', encoding='utf8') 
   print(args.path)
   step_num = 0
 
   for i in range(len(datafiles)):
+    #print(datafiles[i])
     '''
     width and height to read the images (it can be the same or different. the higher, the slower it will train and the more memory it will need)
     '''
@@ -161,31 +170,50 @@ def main():
     os.environ["CUDA_VISIBLE_DEVICES"] = str(n_gpu)
 
     # Data Loader
-    loader = Loader.Loader(dataFolderPath= args.path + '/datasets/'+
-            datafiles[i], n_classes=CONFIG['n_classes'], width=CONFIG['width'], height=CONFIG['height'], median_frequency=0.)
+    loader = Loader.Loader(dataFolderPath= args.path + datafiles[i], n_classes=CONFIG['n_classes'], width=CONFIG['width'], height=CONFIG['height'], median_frequency=0.)
 
     # Define your model
-    model = MiniNetv2.MiniNetv2(num_classes=CONFIG['n_classes'],include_top=True)
-    # restore if model saved for fine-tuning
-    restore_state(model, args.path + '/weights_mininet/endo17/model_0')
-   
+    #if i==0 :
+      # build model
+    base_model = MiniNetv2.MiniNetv2(num_classes=CONFIG['n_classes'],include_top=False)
+    restore_state(base_model, args.path + '/weights_mininet/mininet_endomapper/model_0')
+    base_model.trainable = False
+    input_shape = (1056,1280,3)
+    inputs = tf.keras.Input(shape=input_shape)
+    x = base_model(inputs)
+    x = tf.keras.layers.GlobalAveragePooling2D()(x)
+    #x = tf.keras.layers.Flatten()(x)
+    #x = tf.keras.layers.Dropout(0.8)(x)
+    #x = tf.keras.layers.Dense(32,activation=tf.nn.relu)(x)
+    x = tf.keras.layers.Dropout(0.2)(x)
+    outputs = tf.keras.layers.Dense(1,activation=tf.nn.sigmoid)(x)
+    model = tf.keras.Model(inputs,outputs)
+    #else :
+      # restore if model saved and show number of params
+      #restore_state(model, colab_path + '/weights_mininet/tool_seg/'+model_name)
+  
     # optimizer
     learning_rate = tf.Variable(CONFIG['init_lr'])
-    optimizer = tf.keras.optimizers.Adam(learning_rate)
-    loss_function = tf.keras.losses.CategoricalCrossentropy()
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.003)
+    loss_function = tf.keras.losses.BinaryCrossentropy()
 
     # Train and evaluate
-    
+    model.summary() 
     train(loader=loader, optimizer=optimizer, loss_function=loss_function, model=model, config=CONFIG,
-          lr=learning_rate,  name_best_model=args.path+'/weights_mininet/mininet_endomapper/'+model_name, evaluation=True, preprocess_mode='normalize',step_num=step_num)
+          lr=learning_rate,  name_best_model=args.path+'/weights_mininet/clasif_mininet_endomapper/'+model_name, evaluation=True, preprocess_mode='normalize',step_num=step_num)
 
-
+    """ 
     print('Testing model')
-    test_acc, test_miou,_ = get_metrics(loader, model, loss_function, loader.n_classes, train=False,  flip_inference=True, scales=[0.75,1,1.25,1.5,1.75],
+    test_acc,_ = get_metrics(loader, model, loss_function, loader.n_classes,val=False, train=False,  flip_inference=True, scales=[0.75,1,1.25,1.5,1.75],
                                       write_images=True, preprocess_mode='normalize', time_exect=True)
     print('Test accuracy: ' + str(test_acc.numpy()))
-    print('Test miou: ' + str(test_miou.numpy()))
 
+    print('Val model')
+    val_acc,_ = get_metrics(loader, model, loss_function, loader.n_classes,val=False, train=False,  flip_inference=True, scales=[0.75,1,1.25,1.5,1.75],
+                                      write_images=True, preprocess_mode='normalize', time_exect=True)
+    print('Val accuracy: ' + str(val_acc.numpy()))
+    #print('Test miou: ' + str(test_miou.numpy()))
+    """
     log.close()
     '''
     you can change the parameters 
@@ -197,3 +225,4 @@ if __name__ == '__main__':
     main()
 
         
+
