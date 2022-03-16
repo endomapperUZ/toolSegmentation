@@ -18,17 +18,20 @@ The main goal is to obtain a tool segmentation model adapted to the requirements
 Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## How to run
+Folder **endovis_challenge** contains files adapted from **robot-surgery-segmentation** for models LinkNet and UNet. 
+Folder **mininet** contains files adapted from **MiniNet-v2** as well as the implementation of our clasifier. 
+
 Fine-tuned models are available at https://drive.google.com/drive/folders/1VOtD3U9jF4jPsPlZfU0LD3yXx0oI8d8-?usp=sharing. Best models obtained are Linknet models number 21 and 22 and Mininet.
 
-XML files containing masks coordinates for UCL frames are available at https://drive.google.com/drive/folders/1bIv1w320DhIB3AW0UWRPtRgjlG4ephs5?usp=sharing
+HCULB frames and masks are available at https://drive.google.com/drive/folders/1_zzQr82Vv5du99Mid6mt3wPoOYTWTJt8?usp=sharing.
 
-File *Demo.ipynb* provides an example of how to use the model in order to get a prediction for a given image using one of the models.
+File *mininet/generate_masks.py* provides an example of how to use the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
 
 ## Results
-All models were available pretrained on images similar to those of the Hamlyn dataset, and were then fine-tuned on more specific images from a different dataset (UCL).
-File *training.ipynb* shows how to fine-tune the models.
+All models were available pretrained on images similar to those of the Hamlyn dataset, and were then fine-tuned on more specific images from a different dataset (HCULB).
+File *endovis_challenge/train_ft.sh* performs training of LinkNet and UNet models. File *mininet/train.sh* performs training of MiniNet model. File *mininet/train_classif.sh* performs training of our clasifier. 
 
-The following table shows several representative examples of the segmentations obtained for images both from the Hamlyn dataset [2] and from the project sequences (UCL and HCULB). The results use different models (UNet, TernausNet-11 and LinkNet-34) with the original and our fine-tuned versions. They show how the models fine-tuned with a few project labeled frames (just from one labeled sequence) adapt adequately to situations of our target domain (UCL and HCULB).
+The following table shows several representative examples of the segmentations obtained for images from the HCULB dataset. The results use different models (UNet, TLinkNet-34) with the original and our fine-tuned versions. They show how the models fine-tuned with a few project labeled frames (just from one labeled sequence) adapt adequately to situations of our target domain (UCL and HCULB).
 
 [3] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
 
