@@ -1,26 +1,26 @@
 import glob
 import random
 
-def get_split(root, fold, train_files, val_files):
+def get_split(root, fold, train_size ):
     
+  train_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/*.png") 
   train_file_names = []
   val_file_names = []
-  for file in train_files:
-    print(file)
-    train_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
-    train_path.sort()
-    for path in train_path:
-      train_file_names.append(path)
-
-  for file in val_files:
-    print(file)
-    val_path = glob.glob(root + "/data/" + fold.replace('raw','masks') + "/"+file+"*.png") 
-    val_path.sort()
-    for path in val_path:
-      val_file_names.append(path)
-
+  #train_path.sort()
+  num_files = len(train_path)
+  print(num_files)
+  file_ind = [k for k in range(num_files)]
+  random.shuffle(file_ind)
+  for i in range(int(num_files*train_size)):
+    train_file_names.append(train_path[file_ind[i]])
+  for m in range(int(num_files*train_size), num_files):
+    val_file_names.append(train_path[file_ind[m]])
+  #train_file_names = train_path[:int(num_files*train_size)]
+  #val_file_names = train_path[int(num_files*train_size):]
+ # print(val_file_names)
   random.shuffle(train_file_names)
   random.shuffle(val_file_names)
+  #print(val_file_names) 
   print(len(train_file_names))
   print(len(val_file_names))
   #file_name = "train_val_dataset"+fold.replace('train_data/','').replace('_raw','')+".txt"

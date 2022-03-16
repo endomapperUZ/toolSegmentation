@@ -1,4 +1,5 @@
 import torch
+import os
 import numpy as np
 import cv2
 from torch.utils.data import Dataset
@@ -39,6 +40,9 @@ class RigidDataset(Dataset):
 def load_image(path):
     img_path = 'raw'
     img = cv2.imread(str(path).replace('masks',img_path).replace('mask','frame'))
+    #print(os.path.exists(str(path).replace('masks',img_path).replace('mask','frame').replace('png','jpg')))
+    #print(str(path[:-3]))
+    #print(str(path[:-3]).replace('masks',img_path).replace('mask','frame')+'jpg')
     return cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 

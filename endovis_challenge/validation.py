@@ -1,5 +1,5 @@
 import numpy as np
-import utils_ft as utils
+import utils_ft
 from torch import nn
 import torch
 
@@ -10,15 +10,16 @@ def validation_binary(model, criterion, valid_loader, num_classes=None):
         losses = []
 
         jaccard = []
-
+        i = 0
         for inputs, targets in valid_loader:
             inputs = utils.cuda(inputs)
             targets = utils.cuda(targets)
             outputs = model(inputs)
             loss = criterion(outputs, targets)
             losses.append(loss.item())
-            jaccard += get_jaccard(targets, (outputs > 0).float())
-
+            jaccard += get_jaccard(targets>0, (outputs > 0).float())
+            i += 1
+            print(i)
         valid_loss = np.mean(losses)  # type: float
 
         valid_jaccard = np.mean(jaccard).astype(np.float64)

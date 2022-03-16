@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from validation import validation_binary, validation_multi
 from generate_masks import get_model
-
+import os
 import torch
 import torch.optim as optim
 from torch import nn
@@ -30,13 +30,11 @@ from albumentations import (
     CenterCrop
 )
 
-folds = ["train_data/train_raw"]
+folds = ["train_data2/train_raw"]
 train_heights = [1056]
 train_widths = [1280]
 val_heights = [1056]
 val_widths = [1280]
-train_files = ['video6']
-val_files = ['video13','video15_1']
 
 def main():
     parser = argparse.ArgumentParser()
@@ -57,7 +55,7 @@ def main():
     arg('--train_size', type=float)
 
     args = parser.parse_args()
-
+    os.environ["CUDA_VISIBLE_DEVICES"]="0" 
     model = get_model(args.model_path, model_type=args.model_type, problem_type='binary')
     loss = LossBinary(args.jaccard_weight)
 
@@ -76,7 +74,7 @@ def main():
     val_crop_height = val_heights[args.fold]
     val_crop_width = val_widths[args.fold]
 
-    train_file_names, val_file_names = get_split(args.root, fold, train_files, val_files)
+    train_file_names, val_file_names = get_split(args.root, fold, args.train_size)
 
     print('num train = {}, num_val = {}'.format(len(train_file_names), len(val_file_names)))
 

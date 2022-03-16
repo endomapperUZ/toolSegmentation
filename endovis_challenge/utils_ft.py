@@ -121,6 +121,7 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
                 mean_loss = np.mean(losses[-report_each:])
                 jaccard += get_jaccard(targets, (outputs > 0).float())
                 tq.set_postfix(loss='{:.5f}'.format(mean_loss))
+                #print('Valid loss: {:.5f}, jaccard: {:.5f}'.format(valid_loss, valid_jaccard))
                 if i and i % report_each == 0:                
                     write_event(log, step, loss=mean_loss)
             mean_jac = np.mean(jaccard).astype(np.float64)
@@ -134,10 +135,11 @@ def train(args, model, model_name, num_mod,type_mod, criterion, train_loader, va
             valid_loss = valid_metrics['valid_loss']
             valid_losses.append(valid_loss)
             valid_jac = valid_metrics['jaccard_loss']
-            #print('Valid loss: {:.5f}, jaccard: {:.5f}'.format(valid_loss, valid_jaccard))
             if valid_jac > best_jac:
               best_jac = valid_jac
-              save(n_epochs+1)            
+              save(epoch + 1)
+            else:
+                state['epoch'] = epoch + 1              
             print('Best model jaccard : '+ str(best_jac))
         except KeyboardInterrupt:
             tq.close()
