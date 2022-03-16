@@ -30,7 +30,7 @@ File *mininet/generate_masks.py* provides an example of how to use the full segm
 Models UNet and LinkNet were available in **robot-surgery-segmentation** pretrained on images from the EndoVis17 dataset, and were then fine-tuned on more specific images from HCULB dataset. Mininet was trained from scratch on EndoVis17 ndataset and then fine-tuned on HCULB dataset.
 File *endovis_challenge/train_ft.sh* performs training of LinkNet and UNet models. File *mininet/train.sh* performs training of MiniNet model. File *mininet/train_classif.sh* performs training of our clasifier. 
 The following figure shows examples of binary segmentations from HCULB dataset obtained using different models without applying our pre-filtering clasifier. 
-The last column shows an example of a frame without in which all segmentation models introduce False Positives. The effect of our pre-filtering classifier can be seen in the [Video Demo](https://drive.google.com/file/d/1anOHK4h19EesMFc_drYFnbcYtOBeTuJb/view?usp=sharing).
+The last column shows an example of a frame without tool in which all segmentation models introduce False Positives. The effect of our pre-filtering classifier can be seen in the [Video Demo](https://drive.google.com/file/d/1anOHK4h19EesMFc_drYFnbcYtOBeTuJb/view?usp=sharing).
 
 [3] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
 
