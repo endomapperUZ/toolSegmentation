@@ -1,5 +1,5 @@
 # toolSegmentation
-Code for 'Efficient tool segmentation for endoscopic videos in the wild' (MIDL 2022)
+Code for 'Efficient tool segmentation for endoscopic videos in the wild' (MIDL 2022).
 [Paper](https://openreview.net/pdf?id=DPkb7gxt6gZ) and [Video Demo](https://drive.google.com/file/d/1anOHK4h19EesMFc_drYFnbcYtOBeTuJb/view?usp=sharing).
 
 
