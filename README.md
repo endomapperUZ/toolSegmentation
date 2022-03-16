@@ -1,7 +1,15 @@
 # toolSegmentation
-This repository is built on a fork of project **robot-surgery-segmentation** (at https://github.com/ternaus/robot-surgery-segmentation), the official implementation of the paper 
+Code for 'Efficient tool segmentation for endoscopic videos in the wild' (MIDL 2022)
+[Paper] (https://openreview.net/pdf?id=DPkb7gxt6gZ) and [Video Demo] (https://drive.google.com/file/d/1anOHK4h19EesMFc_drYFnbcYtOBeTuJb/view?usp=sharing).
+
+
+This repository is built on a fork of projects **robot-surgery-segmentation** (at https://github.com/ternaus/robot-surgery-segmentation), the official implementation of the paper 
 
 [1] *Automatic Instrument Segmentation in Robot-Assisted Surgery using Deep Learning*. Shvets, Alexey A., et al. IEEE Int. Conf. on Machine Learning and Applications. 2018.
+
+and **MiniNet-v2** (at https://github.com/Shathe/MiniNet-v2), the official implementation of the paper
+
+[2]*MiniNet: An Efficient Semantic Segmentation ConvNet for Real-time Robotic Applications*. Alonso, Iñigo et al. IEEE Transactions on Robotics. 2020.
 
 The main goal is to obtain a tool segmentation model adapted to the requirements of the project **EndoMapper**.
 
@@ -21,6 +29,6 @@ File *training.ipynb* shows how to fine-tune the models.
 
 The following table shows several representative examples of the segmentations obtained for images both from the Hamlyn dataset [2] and from the project sequences (UCL and HCULB). The results use different models (UNet, TernausNet-11 and LinkNet-34) with the original and our fine-tuned versions. They show how the models fine-tuned with a few project labeled frames (just from one labeled sequence) adapt adequately to situations of our target domain (UCL and HCULB).
 
-[2] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
+[3] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
 
 ![results2](/images/resultados2_2.png)
