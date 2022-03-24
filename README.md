@@ -15,7 +15,7 @@ and **MiniNet-v2** (at https://github.com/Shathe/MiniNet-v2), the official imple
 The main goal is to obtain a tool segmentation model adapted to the requirements of the project **EndoMapper**.
 
 ## Authors
-Clara Tomasini, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
+Clara Tomasini, Iñigo Alonso, León Barbed, Ana Murillo, Luis Riazuelo, Pablo Azagra
 
 ## How to run
 Folder **endovis_challenge** contains files adapted from **robot-surgery-segmentation** for models LinkNet and UNet. 
