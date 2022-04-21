@@ -21,7 +21,7 @@ Clara Tomasini, Iñigo Alonso, Ana Murillo, Luis Riazuelo
 Folder **endovis_challenge** contains files adapted from **robot-surgery-segmentation** for models LinkNet and UNet. 
 Folder **mininet** contains files adapted from **MiniNet-v2** as well as the implementation of our clasifier. 
 
-Fine-tuned models and trained clasifier are available at https://drive.google.com/drive/folders/1BYyfUek6arVhpgChWuhD6JVQ9-RS4ZNm?usp=sharing. 
+Fine-tuned models and trained clasifier are available [here](https://drive.google.com/drive/folders/1BYyfUek6arVhpgChWuhD6JVQ9-RS4ZNm?usp=sharing). 
 HCULB frames and masks : TO BE RELEASED
 
 File *mininet/generate_masks.py* provides an example of how to use the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
@@ -32,6 +32,5 @@ File *endovis_challenge/train_ft.sh* performs training of LinkNet and UNet model
 The following figure shows examples of binary segmentations from HCULB dataset obtained using different models without applying our pre-filtering clasifier. 
 The last column shows an example of a frame without tool in which all segmentation models introduce False Positives. The effect of our pre-filtering classifier can be seen in the [Video Demo](https://drive.google.com/file/d/1anOHK4h19EesMFc_drYFnbcYtOBeTuJb/view?usp=sharing).
 
-[3] *Three-dimensional tissue deformation recovery and tracking*. P. Mountney, D. Stoyanov, and G.-Z. Yang. IEEE Signal Processing Magazine, 27(4):14–24, 2010.
 
 ![results](/images/results_seg_hculb.png)
