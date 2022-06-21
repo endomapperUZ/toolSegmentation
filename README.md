@@ -26,7 +26,7 @@ HCULB frames and masks : TO BE RELEASED
 
 File *mininet/generate_masks.py* provides an example of how to use the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
 
-## Results
+## Results 
 Models UNet and LinkNet were available in **robot-surgery-segmentation** pretrained on images from the EndoVis17 dataset, and were then fine-tuned on more specific images from HCULB dataset. Mininet was trained from scratch on EndoVis17 ndataset and then fine-tuned on HCULB dataset.
 File *endovis_challenge/train_ft.sh* performs training of LinkNet and UNet models. File *mininet/train.sh* performs training of MiniNet model. File *mininet/train_classif.sh* performs training of our clasifier. 
 The following figure shows examples of binary segmentations from HCULB dataset obtained using different models without applying our pre-filtering clasifier. 
