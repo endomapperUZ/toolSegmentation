@@ -22,7 +22,7 @@ Folder **endovis_challenge** contains files adapted from **robot-surgery-segment
 Folder **mininet** contains files adapted from **MiniNet-v2** as well as the implementation of our clasifier. 
 
 Fine-tuned models and trained clasifier are available [here](https://drive.google.com/drive/folders/1BYyfUek6arVhpgChWuhD6JVQ9-RS4ZNm?usp=sharing). 
-HCULB frames and masks : TO BE RELEASED
+HCULB frames and masks : TO BE RELEASED 
 
 File *mininet/generate_masks.py* provides an example of how to use the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
 
