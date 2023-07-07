@@ -24,7 +24,7 @@ Folder **mininet** contains files adapted from **MiniNet-v2** as well as the imp
 Fine-tuned models and trained clasifier are available [here](https://drive.google.com/drive/folders/1BYyfUek6arVhpgChWuhD6JVQ9-RS4ZNm?usp=sharing). 
 
 
-File *mininet/generate_masks.py* provides an example of how to use the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
+File *mininet/generate_masks.py* provides an example of how to run the full segmentation pipeline including MiniNet model and our clasifier in order to get a prediction for a given image.
 
 ## Results 
 Models UNet and LinkNet were available in **robot-surgery-segmentation** pretrained on images from the EndoVis17 dataset, and were then fine-tuned on more specific images from EndoMapper dataset. Mininet was trained from scratch on EndoVis17 ndataset and then fine-tuned on EndoMapper dataset.
